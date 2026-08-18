@@ -61,9 +61,10 @@ function extractLink(block: string): string | null {
     const value = decode(plain);
     if (value.startsWith("http")) return value;
   }
-  const href =
+  const href: string | null =
     block.match(/<link\b[^>]*rel=["']alternate["'][^>]*href=["']([^"']+)["']/i)?.[1] ??
-    attr(block, "link", "href");
+    attr(block, "link", "href") ??
+    null;
   return href ?? null;
 }
 
@@ -75,8 +76,8 @@ function extractImage(block: string): string | null {
   ].filter(Boolean) as string[];
   const image = candidates.find((c) => /\.(jpe?g|png|webp|avif)/i.test(c) || c.includes("http"));
   if (image) return image;
-  const inline = block.match(/<img[^>]+src=["']([^"']+)["']/i)?.[1];
-  return inline ?? null;
+  const inline: string | null = block.match(/<img[^>]+src=["']([^"']+)["']/i)?.[1] ?? null;
+  return inline;
 }
 
 function parseFeed(xml: string, source: string): Article[] {
