@@ -75,13 +75,19 @@ function extractLink(block: string): string | null {
 }
 
 function extractImage(block: string): string | null {
-  const candidates = [
-    attr(block, "media:content", "url"),
-    attr(block, "media:thumbnail", "url"),
-    attr(block, "enclosure", "url"),
-  ].filter(Boolean) as string[];
-  const image = candidates.find((c) => /\.(jpe?g|png|webp|avif)/i.test(c) || c.includes("http"));
-  if (image) return image;
+  const media = Array.from(block.matchAll(/<media:(?:content|thumbnail)\b[^>]*>/gi)).map((m) => {
+    const url = m[0].match(/\burl=["']([^"']+)["']/i)?.[1];
+    const width = Number(m[0].match(/\bwidth=["'](\d+)["']/i)?.[1] ?? 0);
+    return { url: url ? entities(url) : null, width };
+  });
+  const best = media
+    .filter((m): m is { url: string; width: number } => Boolean(m.url))
+    .sort((a, b) => b.width - a.width)[0];
+  if (best) return best.url;
+
+  const enclosure = attr(block, "enclosure", "url");
+  if (enclosure && /\.(jpe?g|png|webp|avif)/i.test(enclosure)) return enclosure;
+
   const inline = block.match(/<img[^>]+src=["']([^"']+)["']/i)?.[1];
   return inline ? entities(inline) : null;
 }
