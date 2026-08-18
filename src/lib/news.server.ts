@@ -45,14 +45,14 @@ function decode(input: string): string {
 function tag(block: string, names: string[]): string | null {
   for (const name of names) {
     const m = block.match(new RegExp(`<${name}(?:\\s[^>]*)?>([\\s\\S]*?)</${name}>`, "i"));
-    if (m) return m[1];
+    if (m?.[1] != null) return m[1];
   }
   return null;
 }
 
 function attr(block: string, tagName: string, attrName: string): string | null {
   const m = block.match(new RegExp(`<${tagName}\\b[^>]*\\b${attrName}=["']([^"']+)["']`, "i"));
-  return m ? m[1] : null;
+  return m?.[1] ?? null;
 }
 
 function extractLink(block: string): string | null {
