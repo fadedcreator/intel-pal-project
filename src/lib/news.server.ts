@@ -101,7 +101,9 @@ function parseFeed(xml: string, source: string): Article[] {
       parsed && !Number.isNaN(parsed.getTime()) ? parsed.toISOString() : new Date().toISOString();
 
     const summaryRaw = tag(block, ["description", "summary", "content:encoded", "content"]) ?? "";
-    const summary = decode(summaryRaw).slice(0, 260);
+    const summaryFull = decode(summaryRaw);
+    const summary =
+      summaryFull.length > 240 ? `${summaryFull.slice(0, 240).trimEnd()}\u2026` : summaryFull;
 
     out.push({
       id: `${source}:${link}`,

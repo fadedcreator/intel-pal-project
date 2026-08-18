@@ -354,6 +354,9 @@ function LeadStory({ article, saved, onSave }: CardProps) {
             src={article.image}
             alt=""
             loading="eager"
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
             className="h-64 w-full object-cover opacity-80 transition-transform duration-500 group-hover:scale-[1.03] sm:h-80"
           />
         )}
@@ -396,6 +399,9 @@ function StoryCard({ article, saved, onSave }: CardProps) {
             src={article.image}
             alt=""
             loading="lazy"
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
             className="mb-3 h-36 w-full rounded-md object-cover opacity-85 transition-opacity group-hover:opacity-100"
           />
         )}
