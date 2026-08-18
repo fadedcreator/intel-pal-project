@@ -257,7 +257,7 @@ function Index() {
                   ))}
                 </ul>
               ) : (
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div className="grid items-start gap-4 sm:grid-cols-2">
                   {rest.map((a: Article) => (
                     <StoryCard key={a.id} article={a} saved={saved} onSave={toggle} />
                   ))}
