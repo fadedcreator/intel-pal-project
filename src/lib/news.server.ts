@@ -22,24 +22,30 @@ export const FEEDS: Feed[] = [
   { source: "Hugging Face", url: "https://huggingface.co/blog/feed.xml" },
 ];
 
-function decode(input: string): string {
+function entities(input: string): string {
   return input
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
-    .replace(/<[^>]+>/g, " ")
     .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
     .replace(/&#0?39;|&apos;|&#x27;/g, "'")
     .replace(/&#8217;|&rsquo;/g, "\u2019")
     .replace(/&#8216;|&lsquo;/g, "\u2018")
     .replace(/&#8220;|&ldquo;/g, "\u201c")
     .replace(/&#8221;|&rdquo;/g, "\u201d")
     .replace(/&#8212;|&mdash;/g, "\u2014")
+    .replace(/&#8211;|&ndash;/g, "\u2013")
     .replace(/&#8230;|&hellip;/g, "\u2026")
-    .replace(/\s+/g, " ")
-    .trim();
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, "&");
+}
+
+function decode(input: string): string {
+  let out = input.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1");
+  out = entities(out);
+  out = out.replace(/<[^>]+>/g, " ");
+  out = entities(out);
+  out = out.replace(/<[^>]+>/g, " ");
+  return out.replace(/\s+/g, " ").trim();
 }
 
 function tag(block: string, names: string[]): string | null {
