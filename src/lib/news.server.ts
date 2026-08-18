@@ -58,7 +58,7 @@ function tag(block: string, names: string[]): string | null {
 
 function attr(block: string, tagName: string, attrName: string): string | null {
   const m = block.match(new RegExp(`<${tagName}\\b[^>]*\\b${attrName}=["']([^"']+)["']`, "i"));
-  return m?.[1] ?? null;
+  return m?.[1] ? entities(m[1]) : null;
 }
 
 function extractLink(block: string): string | null {
@@ -82,8 +82,8 @@ function extractImage(block: string): string | null {
   ].filter(Boolean) as string[];
   const image = candidates.find((c) => /\.(jpe?g|png|webp|avif)/i.test(c) || c.includes("http"));
   if (image) return image;
-  const inline: string | null = block.match(/<img[^>]+src=["']([^"']+)["']/i)?.[1] ?? null;
-  return inline;
+  const inline = block.match(/<img[^>]+src=["']([^"']+)["']/i)?.[1];
+  return inline ? entities(inline) : null;
 }
 
 function parseFeed(xml: string, source: string): Article[] {
