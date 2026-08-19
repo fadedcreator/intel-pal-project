@@ -343,6 +343,81 @@ function Index() {
   );
 }
 
+type Topic = { term: string; count: number };
+
+function SignalBoard({
+  topics,
+  active,
+  onPick,
+}: {
+  topics: Topic[];
+  active: string;
+  onPick: (term: string) => void;
+}) {
+  const max = topics[0]?.count || 1;
+  const [top, ...others] = topics;
+  if (!top) return null;
+
+  return (
+    <section className="relative overflow-hidden rounded-lg border border-border bg-surface p-4">
+      <div className="pointer-events-none absolute -top-16 -right-12 size-40 rounded-full bg-wire/10 blur-2xl" />
+      <div className="mb-3 flex items-center justify-between">
+        <h2 className="label-mono text-muted-foreground">Signal board</h2>
+        <span className="label-mono flex items-center gap-1 text-wire">
+          <span className="size-1.5 animate-pulse rounded-full bg-wire" />
+          Live
+        </span>
+      </div>
+
+      <button
+        onClick={() => onPick(top.term)}
+        className="group relative mb-3 block w-full rounded-md border border-wire/40 bg-wire/10 p-3 text-left"
+      >
+        <span className="label-mono text-wire">Top signal</span>
+        <span className="mt-1 flex items-baseline justify-between gap-2">
+          <span className="font-display text-xl font-bold tracking-tight group-hover:text-wire">
+            {top.term}
+          </span>
+          <span className="font-display text-xl font-bold text-wire">{top.count}</span>
+        </span>
+        <span className="mt-2 flex h-6 items-end gap-0.5">
+          {Array.from({ length: 14 }).map((_, i) => (
+            <span
+              key={i}
+              className="flex-1 rounded-sm bg-wire/60"
+              style={{ height: `${25 + Math.abs(Math.sin((i + top.count) * 1.7)) * 75}%` }}
+            />
+          ))}
+        </span>
+      </button>
+
+      <div className="flex flex-wrap gap-1.5">
+        {others.map((t) => {
+          const heat = t.count / max;
+          const isActive = active.toLowerCase() === t.term.toLowerCase();
+          return (
+            <button
+              key={t.term}
+              onClick={() => onPick(t.term)}
+              style={{
+                backgroundColor: `color-mix(in oklab, var(--wire) ${Math.round(heat * 22)}%, transparent)`,
+              }}
+              className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs transition-colors ${
+                isActive
+                  ? "border-wire text-wire"
+                  : "border-border/70 text-foreground/90 hover:border-wire/60 hover:text-wire"
+              }`}
+            >
+              {t.term}
+              <span className="label-mono text-muted-foreground">{t.count}</span>
+            </button>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 type CardProps = { article: Article; saved: string[]; onSave: (id: string) => void };
 
 function SaveButton({ article, saved, onSave }: CardProps) {
