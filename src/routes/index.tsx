@@ -233,8 +233,30 @@ function Index() {
         </div>
       </header>
 
+      <div className="overflow-hidden border-b border-border/70 bg-surface/60">
+        <div className="ticker flex w-max gap-10 py-2">
+          {[0, 1].map((dup) => (
+            <div key={dup} className="flex shrink-0 gap-10" aria-hidden={dup === 1}>
+              {articles.slice(0, 12).map((a: Article) => (
+                <a
+                  key={`${dup}-${a.id}`}
+                  href={a.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="label-mono flex items-center gap-2 whitespace-nowrap text-muted-foreground hover:text-wire"
+                >
+                  <span className="size-1 rounded-full bg-wire/70" />
+                  {a.title}
+                </a>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
       <main className="mx-auto max-w-7xl px-5 py-8">
-        <h1 className="sr-only">AIWire — artificial intelligence news wire</h1>
+        <h1 className="sr-only">AIWire artificial intelligence news wire</h1>
+
 
         {filtered.length === 0 ? (
           <p className="py-24 text-center text-muted-foreground">
