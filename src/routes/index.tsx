@@ -345,6 +345,8 @@ function Index() {
 
 type Topic = { term: string; count: number };
 
+const SPARK = [32, 48, 40, 62, 55, 74, 66, 85, 70, 92, 78, 96, 84, 100];
+
 function SignalBoard({
   topics,
   active,
