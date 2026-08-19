@@ -77,7 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AIWire — The AI news wire" },
+      { title: "AIWire · The AI news wire" },
       {
         name: "description",
         content: "Every important AI story from trusted sources, on one fast page.",

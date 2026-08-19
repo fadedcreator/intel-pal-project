@@ -19,13 +19,13 @@ export const Route = createFileRoute("/")({
   loader: () => getNews(),
   head: () => ({
     meta: [
-      { title: "AIWire — Every AI story that matters, one page" },
+      { title: "AIWire · Every AI story that matters, one page" },
       {
         name: "description",
         content:
           "A live wire of artificial intelligence news from TechCrunch, The Verge, Ars Technica, The Guardian, MIT Tech Review and Hugging Face. Search, filter and skim in seconds.",
       },
-      { property: "og:title", content: "AIWire — Every AI story that matters, one page" },
+      { property: "og:title", content: "AIWire · Every AI story that matters, one page" },
       {
         property: "og:description",
         content: "A live, filterable wire of AI news from the sources worth reading.",
@@ -233,8 +233,30 @@ function Index() {
         </div>
       </header>
 
+      <div className="overflow-hidden border-b border-border/70 bg-surface/60">
+        <div className="ticker flex w-max gap-10 py-2">
+          {[0, 1].map((dup) => (
+            <div key={dup} className="flex shrink-0 gap-10" aria-hidden={dup === 1}>
+              {articles.slice(0, 12).map((a: Article) => (
+                <a
+                  key={`${dup}-${a.id}`}
+                  href={a.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="label-mono flex items-center gap-2 whitespace-nowrap text-muted-foreground hover:text-wire"
+                >
+                  <span className="size-1 rounded-full bg-wire/70" />
+                  {a.title}
+                </a>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
       <main className="mx-auto max-w-7xl px-5 py-8">
-        <h1 className="sr-only">AIWire — artificial intelligence news wire</h1>
+        <h1 className="sr-only">AIWire artificial intelligence news wire</h1>
+
 
         {filtered.length === 0 ? (
           <p className="py-24 text-center text-muted-foreground">
@@ -246,7 +268,7 @@ function Index() {
               {lead && !dense && <LeadStory article={lead} saved={saved} onSave={toggle} />}
 
               <div className="mt-8 mb-4 flex items-center gap-3">
-                <h2 className="label-mono text-foreground">Latest — {rest.length}</h2>
+                <h2 className="label-mono text-foreground">Latest · {rest.length}</h2>
                 <span className="h-px flex-1 bg-border" />
               </div>
 
@@ -257,7 +279,7 @@ function Index() {
                   ))}
                 </ul>
               ) : (
-                <div className="grid items-start gap-4 sm:grid-cols-2">
+                <div className="grid gap-4 sm:grid-cols-2">
                   {rest.map((a: Article) => (
                     <StoryCard key={a.id} article={a} saved={saved} onSave={toggle} />
                   ))}
@@ -266,32 +288,26 @@ function Index() {
             </div>
 
             <aside className="space-y-6 lg:sticky lg:top-36 lg:self-start">
+              <SignalBoard topics={topics} active={query} onPick={setQuery} />
+
               <section className="rounded-lg border border-border bg-surface p-4">
-                <h2 className="label-mono mb-3 text-muted-foreground">Trending topics</h2>
-                <ul className="space-y-2.5">
-                  {topics.map((t: { term: string; count: number }, i: number) => {
-                    const max = topics[0]?.count || 1;
+                <h2 className="label-mono mb-3 text-muted-foreground">Source pulse</h2>
+                <ul className="space-y-2">
+                  {sources.map((s: string) => {
+                    const count = articles.filter((a: Article) => a.source === s).length;
                     return (
-                      <li key={t.term}>
+                      <li key={s}>
                         <button
-                          onClick={() => setQuery(t.term)}
-                          className="group w-full text-left"
+                          onClick={() => setSource(s === source ? null : s)}
+                          className="flex w-full items-center gap-2 text-left text-sm"
                         >
-                          <div className="flex items-baseline justify-between text-sm">
-                            <span className="font-medium group-hover:text-wire">
-                              <span className="label-mono mr-2 text-muted-foreground">
-                                {String(i + 1).padStart(2, "0")}
-                              </span>
-                              {t.term}
-                            </span>
-                            <span className="label-mono text-muted-foreground">{t.count}</span>
-                          </div>
-                          <div className="mt-1.5 h-0.5 w-full bg-border">
-                            <div
-                              className="h-full bg-wire"
-                              style={{ width: `${(t.count / max) * 100}%` }}
-                            />
-                          </div>
+                          <span
+                            className={`truncate ${source === s ? "text-wire" : "hover:text-wire"}`}
+                          >
+                            {s}
+                          </span>
+                          <span className="h-px flex-1 bg-border" />
+                          <span className="label-mono text-muted-foreground">{count}</span>
                         </button>
                       </li>
                     );
@@ -302,7 +318,7 @@ function Index() {
               <section className="rounded-lg border border-border bg-surface p-4 text-sm">
                 <h2 className="label-mono mb-2 text-muted-foreground">How it works</h2>
                 <p className="text-muted-foreground">
-                  AIWire pulls straight from the publishers' feeds — no rewriting, no algorithmic
+                  AIWire pulls straight from the publishers' feeds. No rewriting, no algorithmic
                   reshuffling. Press{" "}
                   <kbd className="label-mono rounded border border-border px-1">/</kbd> to search,
                   bookmark anything to read later.
@@ -324,6 +340,83 @@ function Index() {
         </div>
       </footer>
     </div>
+  );
+}
+
+type Topic = { term: string; count: number };
+
+const SPARK = [32, 48, 40, 62, 55, 74, 66, 85, 70, 92, 78, 96, 84, 100];
+
+function SignalBoard({
+  topics,
+  active,
+  onPick,
+}: {
+  topics: Topic[];
+  active: string;
+  onPick: (term: string) => void;
+}) {
+  const max = topics[0]?.count || 1;
+  const [top, ...others] = topics;
+  if (!top) return null;
+
+  return (
+    <section className="relative overflow-hidden rounded-lg border border-border bg-surface p-4">
+      <div className="pointer-events-none absolute -top-16 -right-12 size-40 rounded-full bg-wire/10 blur-2xl" />
+      <div className="mb-3 flex items-center justify-between">
+        <h2 className="label-mono text-muted-foreground">Signal board</h2>
+        <span className="label-mono flex items-center gap-1 text-wire">
+          <span className="size-1.5 animate-pulse rounded-full bg-wire" />
+          Live
+        </span>
+      </div>
+
+      <button
+        onClick={() => onPick(top.term)}
+        className="group relative mb-3 block w-full rounded-md border border-wire/40 bg-wire/10 p-3 text-left"
+      >
+        <span className="label-mono text-wire">Top signal</span>
+        <span className="mt-1 flex items-baseline justify-between gap-2">
+          <span className="font-display text-xl font-bold tracking-tight group-hover:text-wire">
+            {top.term}
+          </span>
+          <span className="font-display text-xl font-bold text-wire">{top.count}</span>
+        </span>
+        <span className="mt-2 flex h-6 items-end gap-0.5">
+          {SPARK.map((h, i) => (
+            <span
+              key={i}
+              className="flex-1 rounded-sm bg-wire/60"
+              style={{ height: `${h}%` }}
+            />
+          ))}
+        </span>
+      </button>
+
+      <div className="flex flex-wrap gap-1.5">
+        {others.map((t) => {
+          const heat = t.count / max;
+          const isActive = active.toLowerCase() === t.term.toLowerCase();
+          return (
+            <button
+              key={t.term}
+              onClick={() => onPick(t.term)}
+              style={{
+                backgroundColor: `color-mix(in oklab, var(--wire) ${Math.round(heat * 22)}%, transparent)`,
+              }}
+              className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs transition-colors ${
+                isActive
+                  ? "border-wire text-wire"
+                  : "border-border/70 text-foreground/90 hover:border-wire/60 hover:text-wire"
+              }`}
+            >
+              {t.term}
+              <span className="label-mono text-muted-foreground">{t.count}</span>
+            </button>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 
