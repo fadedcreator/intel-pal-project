@@ -268,7 +268,7 @@ function Index() {
               {lead && !dense && <LeadStory article={lead} saved={saved} onSave={toggle} />}
 
               <div className="mt-8 mb-4 flex items-center gap-3">
-                <h2 className="label-mono text-foreground">Latest — {rest.length}</h2>
+                <h2 className="label-mono text-foreground">Latest · {rest.length}</h2>
                 <span className="h-px flex-1 bg-border" />
               </div>
 
@@ -288,32 +288,26 @@ function Index() {
             </div>
 
             <aside className="space-y-6 lg:sticky lg:top-36 lg:self-start">
+              <SignalBoard topics={topics} active={query} onPick={setQuery} />
+
               <section className="rounded-lg border border-border bg-surface p-4">
-                <h2 className="label-mono mb-3 text-muted-foreground">Trending topics</h2>
-                <ul className="space-y-2.5">
-                  {topics.map((t: { term: string; count: number }, i: number) => {
-                    const max = topics[0]?.count || 1;
+                <h2 className="label-mono mb-3 text-muted-foreground">Source pulse</h2>
+                <ul className="space-y-2">
+                  {sources.map((s: string) => {
+                    const count = articles.filter((a: Article) => a.source === s).length;
                     return (
-                      <li key={t.term}>
+                      <li key={s}>
                         <button
-                          onClick={() => setQuery(t.term)}
-                          className="group w-full text-left"
+                          onClick={() => setSource(s === source ? null : s)}
+                          className="flex w-full items-center gap-2 text-left text-sm"
                         >
-                          <div className="flex items-baseline justify-between text-sm">
-                            <span className="font-medium group-hover:text-wire">
-                              <span className="label-mono mr-2 text-muted-foreground">
-                                {String(i + 1).padStart(2, "0")}
-                              </span>
-                              {t.term}
-                            </span>
-                            <span className="label-mono text-muted-foreground">{t.count}</span>
-                          </div>
-                          <div className="mt-1.5 h-0.5 w-full bg-border">
-                            <div
-                              className="h-full bg-wire"
-                              style={{ width: `${(t.count / max) * 100}%` }}
-                            />
-                          </div>
+                          <span
+                            className={`truncate ${source === s ? "text-wire" : "hover:text-wire"}`}
+                          >
+                            {s}
+                          </span>
+                          <span className="h-px flex-1 bg-border" />
+                          <span className="label-mono text-muted-foreground">{count}</span>
                         </button>
                       </li>
                     );
@@ -324,7 +318,7 @@ function Index() {
               <section className="rounded-lg border border-border bg-surface p-4 text-sm">
                 <h2 className="label-mono mb-2 text-muted-foreground">How it works</h2>
                 <p className="text-muted-foreground">
-                  AIWire pulls straight from the publishers' feeds — no rewriting, no algorithmic
+                  AIWire pulls straight from the publishers' feeds. No rewriting, no algorithmic
                   reshuffling. Press{" "}
                   <kbd className="label-mono rounded border border-border px-1">/</kbd> to search,
                   bookmark anything to read later.
