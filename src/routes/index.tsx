@@ -385,7 +385,7 @@ function SignalBoard({
             <span
               key={i}
               className="flex-1 rounded-sm bg-wire/60"
-              style={{ height: `${25 + Math.abs(Math.sin((i + top.count) * 1.7)) * 75}%` }}
+              style={{ height: `${Math.round(25 + Math.abs(Math.sin((i + top.count) * 1.7)) * 75)}%` }}
             />
           ))}
         </span>
