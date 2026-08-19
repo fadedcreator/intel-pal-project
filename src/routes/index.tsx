@@ -381,11 +381,11 @@ function SignalBoard({
           <span className="font-display text-xl font-bold text-wire">{top.count}</span>
         </span>
         <span className="mt-2 flex h-6 items-end gap-0.5">
-          {Array.from({ length: 14 }).map((_, i) => (
+          {SPARK.map((h, i) => (
             <span
               key={i}
               className="flex-1 rounded-sm bg-wire/60"
-              style={{ height: `${Math.round(25 + Math.abs(Math.sin((i + top.count) * 1.7)) * 75)}%` }}
+              style={{ height: `${h}%` }}
             />
           ))}
         </span>
