@@ -19,13 +19,13 @@ export const Route = createFileRoute("/")({
   loader: () => getNews(),
   head: () => ({
     meta: [
-      { title: "AIWire — Every AI story that matters, one page" },
+      { title: "AIWire · Every AI story that matters, one page" },
       {
         name: "description",
         content:
           "A live wire of artificial intelligence news from TechCrunch, The Verge, Ars Technica, The Guardian, MIT Tech Review and Hugging Face. Search, filter and skim in seconds.",
       },
-      { property: "og:title", content: "AIWire — Every AI story that matters, one page" },
+      { property: "og:title", content: "AIWire · Every AI story that matters, one page" },
       {
         property: "og:description",
         content: "A live, filterable wire of AI news from the sources worth reading.",
