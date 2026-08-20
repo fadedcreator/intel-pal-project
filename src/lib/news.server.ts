@@ -138,7 +138,7 @@ function extractImage(block: string): string | null {
   return inline ? entities(inline) : null;
 }
 
-function parseFeed(xml: string, source: string): Article[] {
+function parseFeed(xml: string, source: string, kind: SourceKind): Article[] {
   const blocks = xml.match(/<(item|entry)\b[\s\S]*?<\/\1>/gi) ?? [];
   const out: Article[] = [];
 
@@ -162,6 +162,7 @@ function parseFeed(xml: string, source: string): Article[] {
       title: decode(title),
       link: link.trim(),
       source,
+      kind,
       publishedAt,
       summary,
       image: extractImage(block),
@@ -178,7 +179,7 @@ async function fetchFeed(feed: Feed): Promise<Article[]> {
       signal: AbortSignal.timeout(8000),
     });
     if (!res.ok) return [];
-    return parseFeed(await res.text(), feed.source);
+    return parseFeed(await res.text(), feed.source, feed.kind);
   } catch {
     return [];
   }
