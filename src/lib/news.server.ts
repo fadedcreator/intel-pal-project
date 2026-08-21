@@ -127,7 +127,7 @@ async function fetchFeed(feed: Feed): Promise<Article[]> {
   try {
     const res = await fetch(feed.url, {
       headers: { "user-agent": "Mozilla/5.0 (compatible; AIWireBot/1.0)", accept: "*/*" },
-      signal: AbortSignal.timeout(8000),
+      signal: AbortSignal.timeout(12000),
     });
     if (!res.ok) return [];
     return parseFeed(await res.text(), feed.source, feed.kind);
