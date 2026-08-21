@@ -139,7 +139,7 @@ async function fetchFeed(feed: Feed): Promise<Article[]> {
 export async function loadArticles(): Promise<{ articles: Article[]; fetchedAt: string }> {
   const results = await Promise.all(FEEDS.map(fetchFeed));
   const seen = new Set<string>();
-  const articles = results
+  const deduped = results
     .flat()
     .filter((a) => {
       const key = a.title.toLowerCase();
@@ -147,8 +147,23 @@ export async function loadArticles(): Promise<{ articles: Article[]; fetchedAt: 
       seen.add(key);
       return true;
     })
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+
+  // Guarantee every source is represented, then fill the rest by recency.
+  const perSource = new Map<string, number>();
+  const picked = new Set<string>();
+  const featured: Article[] = [];
+  for (const a of deduped) {
+    const n = perSource.get(a.source) ?? 0;
+    if (n >= 4) continue;
+    perSource.set(a.source, n + 1);
+    picked.add(a.id);
+    featured.push(a);
+  }
+
+  const articles = [...featured, ...deduped.filter((a) => !picked.has(a.id))]
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
-    .slice(0, 90);
+    .slice(0, 110);
 
   return { articles, fetchedAt: new Date().toISOString() };
 }
