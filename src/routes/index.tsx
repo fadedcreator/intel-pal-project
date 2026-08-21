@@ -270,8 +270,17 @@ function Index() {
         </div>
       </header>
 
-      <div className="overflow-hidden border-b border-border/60 bg-surface/50">
+      <div
+        className="overflow-hidden border-b border-border/60 bg-surface/50"
+        style={{
+          maskImage:
+            "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+        }}
+      >
         <div className="ticker flex w-max gap-12 py-2.5">
+
           {[0, 1].map((dup) => (
             <div key={dup} className="flex shrink-0 gap-12" aria-hidden={dup === 1}>
               {articles.slice(0, 12).map((a: Article) => (
@@ -332,7 +341,7 @@ function Index() {
                     ))}
                   </ul>
                 ) : (
-                  <div className="grid gap-6 sm:grid-cols-2 xl:gap-8">
+                  <div className="grid items-start gap-6 sm:grid-cols-2 xl:gap-8">
                     {rest.map((a: Article) => (
                       <StoryCard key={a.id} article={a} saved={saved} onSave={toggle} />
                     ))}
