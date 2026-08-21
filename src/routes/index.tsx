@@ -123,8 +123,8 @@ function Index() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const sources = useMemo(
-    () => Array.from(new Set(articles.map((a: Article) => a.source))).sort(),
+  const sources = useMemo<string[]>(
+    () => Array.from(new Set(articles.map((a: Article) => a.source))).sort() as string[],
     [articles],
   );
 
