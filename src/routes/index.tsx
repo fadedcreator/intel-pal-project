@@ -142,18 +142,66 @@ function Index() {
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const cutoff = range ? Date.now() - range * 3600_000 : 0;
     return articles.filter((a: Article) => {
       if (source && a.source !== source) return false;
       if (onlySaved && !saved.includes(a.id)) return false;
-      if (cutoff && new Date(a.publishedAt).getTime() < cutoff) return false;
       if (q && !`${a.title} ${a.summary} ${a.source}`.toLowerCase().includes(q)) return false;
       return true;
     });
-  }, [articles, query, source, range, onlySaved, saved]);
+  }, [articles, query, source, onlySaved, saved]);
 
-  const [lead, ...rest] = filtered;
-  const hasFilters = Boolean(query || source || range || onlySaved);
+  // Fetch real Hacker News engagement only when the Most discussed view is active.
+  useEffect(() => {
+    if (sort !== "discussed") return;
+    const urls = filtered.slice(0, 80).map((a: Article) => a.link);
+    const missing = urls.filter((u: string) => !(u in hnStats));
+    if (!missing.length) return;
+    let cancelled = false;
+    setHnLoading(true);
+    getDiscussion({ data: { urls } })
+      .then((stats) => {
+        if (!cancelled) setHnStats((prev) => ({ ...prev, ...stats }));
+      })
+      .catch(() => undefined)
+      .finally(() => {
+        if (!cancelled) setHnLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sort, filtered]);
+
+  const sorted = useMemo(() => {
+    const list = [...filtered];
+    if (sort === "latest") return list;
+
+    if (sort === "trending") {
+      const terms = topics.map((t: { term: string; count: number }) => ({
+        needle: t.term.toLowerCase(),
+        weight: t.count,
+      }));
+      const score = (a: Article) => {
+        const hay = `${a.title} ${a.summary}`.toLowerCase();
+        let s = 0;
+        for (const t of terms) if (hay.includes(t.needle)) s += t.weight;
+        // Fresher stories break ties inside the same signal band.
+        return s;
+      };
+      return list.sort(
+        (a, b) => score(b) - score(a) || b.publishedAt.localeCompare(a.publishedAt),
+      );
+    }
+
+    return list.sort((a, b) => {
+      const pa = hnStats[a.link]?.points ?? -1;
+      const pb = hnStats[b.link]?.points ?? -1;
+      return pb - pa || b.publishedAt.localeCompare(a.publishedAt);
+    });
+  }, [filtered, sort, topics, hnStats]);
+
+  const [lead, ...rest] = sorted;
+  const hasFilters = Boolean(query || source || onlySaved || sort !== "latest");
 
   const refresh = async () => {
     setRefreshing(true);
@@ -164,9 +212,10 @@ function Index() {
   const clearAll = () => {
     setQuery("");
     setSource(null);
-    setRange(0);
+    setSort("latest");
     setOnlySaved(false);
   };
+
 
   return (
     <div className="min-h-screen">
