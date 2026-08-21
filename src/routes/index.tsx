@@ -542,7 +542,7 @@ function SaveButton({ article, saved, onSave }: CardProps) {
 
 function LeadStory({ article, saved, onSave }: CardProps) {
   return (
-    <article className="group relative overflow-hidden rounded-2xl border border-border/70 bg-surface transition-colors hover:border-wire/40">
+    <article className="group card-lift relative overflow-hidden rounded-2xl border border-border/70 bg-surface hover:border-wire/40 hover:card-lift-hover">
       <a href={article.link} target="_blank" rel="noopener noreferrer" className="block">
         {article.image && (
           <img
@@ -583,7 +583,7 @@ function LeadStory({ article, saved, onSave }: CardProps) {
 
 function StoryCard({ article, saved, onSave }: CardProps) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-xl border border-border/70 bg-surface transition-colors hover:border-wire/40">
+    <article className="group card-lift flex flex-col overflow-hidden rounded-xl border border-border/70 bg-surface hover:border-wire/40 hover:card-lift-hover">
       <a
         href={article.link}
         target="_blank"
