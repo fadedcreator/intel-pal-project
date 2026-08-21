@@ -161,9 +161,10 @@ export async function loadArticles(): Promise<{ articles: Article[]; fetchedAt: 
     featured.push(a);
   }
 
-  const articles = [...featured, ...deduped.filter((a) => !picked.has(a.id))]
-    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
-    .slice(0, 110);
+  const fill = deduped.filter((a) => !picked.has(a.id)).slice(0, Math.max(0, 110 - featured.length));
+  const articles = [...featured, ...fill].sort((a, b) =>
+    b.publishedAt.localeCompare(a.publishedAt),
+  );
 
   return { articles, fetchedAt: new Date().toISOString() };
 }
