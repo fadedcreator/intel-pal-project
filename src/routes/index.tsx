@@ -12,7 +12,8 @@ import {
 } from "lucide-react";
 
 import { getNews } from "@/lib/news.functions";
-import { SOURCE_META, type Article, type SourceKind } from "@/lib/news.server";
+import { SOURCE_META, type SourceKind } from "@/lib/sources";
+import type { Article } from "@/lib/news.server";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -122,8 +123,8 @@ function Index() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const sources = useMemo(
-    () => Array.from(new Set(articles.map((a: Article) => a.source))).sort(),
+  const sources = useMemo<string[]>(
+    () => Array.from(new Set(articles.map((a: Article) => a.source))).sort() as string[],
     [articles],
   );
 
@@ -269,8 +270,17 @@ function Index() {
         </div>
       </header>
 
-      <div className="overflow-hidden border-b border-border/60 bg-surface/50">
+      <div
+        className="overflow-hidden border-b border-border/60 bg-surface/50"
+        style={{
+          maskImage:
+            "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+        }}
+      >
         <div className="ticker flex w-max gap-12 py-2.5">
+
           {[0, 1].map((dup) => (
             <div key={dup} className="flex shrink-0 gap-12" aria-hidden={dup === 1}>
               {articles.slice(0, 12).map((a: Article) => (
@@ -331,7 +341,7 @@ function Index() {
                     ))}
                   </ul>
                 ) : (
-                  <div className="grid gap-6 sm:grid-cols-2 xl:gap-8">
+                  <div className="grid items-start gap-6 sm:grid-cols-2 xl:gap-8">
                     {rest.map((a: Article) => (
                       <StoryCard key={a.id} article={a} saved={saved} onSave={toggle} />
                     ))}
@@ -532,7 +542,7 @@ function SaveButton({ article, saved, onSave }: CardProps) {
 
 function LeadStory({ article, saved, onSave }: CardProps) {
   return (
-    <article className="group relative overflow-hidden rounded-2xl border border-border/70 bg-surface transition-colors hover:border-wire/40">
+    <article className="group card-lift relative overflow-hidden rounded-2xl border border-border/70 bg-surface hover:border-wire/40 hover:card-lift-hover">
       <a href={article.link} target="_blank" rel="noopener noreferrer" className="block">
         {article.image && (
           <img
@@ -573,7 +583,7 @@ function LeadStory({ article, saved, onSave }: CardProps) {
 
 function StoryCard({ article, saved, onSave }: CardProps) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-xl border border-border/70 bg-surface transition-colors hover:border-wire/40">
+    <article className="group card-lift flex flex-col overflow-hidden rounded-xl border border-border/70 bg-surface hover:border-wire/40 hover:card-lift-hover">
       <a
         href={article.link}
         target="_blank"
