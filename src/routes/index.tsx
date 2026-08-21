@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 
 import { getNews } from "@/lib/news.functions";
+import { getDiscussion } from "@/lib/hn.functions";
+import type { HnStat } from "@/lib/hn.server";
 import { SOURCE_META, type SourceKind } from "@/lib/sources";
 import type { Article } from "@/lib/news.server";
 
@@ -39,12 +41,14 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const TIME_RANGES = [
-  { label: "Today", hours: 24 },
-  { label: "3 days", hours: 72 },
-  { label: "7 days", hours: 168 },
-  { label: "All", hours: 0 },
+const SORTS = [
+  { id: "latest", label: "Latest" },
+  { id: "trending", label: "Trending" },
+  { id: "discussed", label: "Most discussed" },
 ] as const;
+
+type SortId = (typeof SORTS)[number]["id"];
+
 
 const FALLBACK_ACCENT = "var(--wire)";
 
