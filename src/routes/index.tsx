@@ -109,7 +109,9 @@ function Index() {
 
   const [query, setQuery] = useState("");
   const [source, setSource] = useState<string | null>(null);
-  const [range, setRange] = useState<number>(0);
+  const [sort, setSort] = useState<SortId>("latest");
+  const [hnStats, setHnStats] = useState<Record<string, HnStat>>({});
+  const [hnLoading, setHnLoading] = useState(false);
   const [dense, setDense] = useState(false);
   const [onlySaved, setOnlySaved] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
