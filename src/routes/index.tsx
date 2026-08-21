@@ -12,7 +12,8 @@ import {
 } from "lucide-react";
 
 import { getNews } from "@/lib/news.functions";
-import { SOURCE_META, type Article, type SourceKind } from "@/lib/news.server";
+import { SOURCE_META, type SourceKind } from "@/lib/sources";
+import type { Article } from "@/lib/news.server";
 
 export const Route = createFileRoute("/")({
   component: Index,
