@@ -493,15 +493,6 @@ function Index() {
                   )}
                 </div>
               </Panel>
-
-              <Panel title="How it works">
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  AIWire pulls straight from the publishers' feeds. No rewriting, no algorithmic
-                  reshuffling. Press{" "}
-                  <kbd className="label-mono rounded border border-border px-1.5 py-0.5">/</kbd> to
-                  search, bookmark anything to read later.
-                </p>
-              </Panel>
             </aside>
           </div>
         )}
