@@ -135,10 +135,14 @@ function Index() {
   );
 
   const grouped = useMemo(() => {
-    const groups: Record<SourceKind, string[]> = { publication: [], newsletter: [] };
+    const groups = { company: [], publication: [], newsletter: [], youtube: [] } as Record<
+      SourceKind,
+      string[]
+    >;
     for (const s of sources) groups[SOURCE_META[s]?.kind ?? "publication"].push(s);
     return groups;
   }, [sources]);
+
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -444,12 +448,13 @@ function Index() {
               <Panel title="Sources">
 
                 <div className="space-y-6">
-                  {(["publication", "newsletter"] as SourceKind[]).map((kind) =>
+                  {SOURCE_KINDS.map((kind) =>
                     grouped[kind].length ? (
                       <div key={kind}>
                         <p className="label-mono mb-3 text-muted-foreground/70">
-                          {kind === "publication" ? "Publications" : "Newsletters"}
+                          {KIND_LABELS[kind]}
                         </p>
+
                         <ul className="space-y-2.5">
                           {grouped[kind].map((s) => {
                             const count = articles.filter((a: Article) => a.source === s).length;
