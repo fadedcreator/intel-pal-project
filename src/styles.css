@@ -208,3 +208,14 @@
     animation: none;
   }
 }
+
+.sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklch, var(--border) 90%, transparent) transparent;
+  overscroll-behavior: contain;
+}
+.sidebar-scroll::-webkit-scrollbar { width: 6px; }
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in oklch, var(--border) 90%, transparent);
+  border-radius: 999px;
+}

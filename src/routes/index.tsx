@@ -437,20 +437,12 @@ function Index() {
               </section>
             </div>
 
-            <aside className="space-y-8 lg:sticky lg:top-40 lg:self-start">
-              <Panel title="How it works">
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  AIWire pulls straight from the publishers' feeds. No rewriting, no algorithmic
-                  reshuffling. Press{" "}
-                  <kbd className="label-mono rounded border border-border px-1.5 py-0.5">/</kbd> to
-                  search, bookmark anything to read later.
-                </p>
-              </Panel>
-
+            <aside className="lg:sticky lg:top-40 lg:self-start lg:max-h-[calc(100vh-11rem)] lg:overflow-y-auto lg:pr-2 sidebar-scroll">
+              <div className="space-y-8">
               <SignalBoard topics={topics} active={query} onPick={setQuery} />
 
-
               <Panel title="Sources">
+
                 <div className="space-y-6">
                   {(["publication", "newsletter"] as SourceKind[]).map((kind) =>
                     grouped[kind].length ? (
@@ -493,7 +485,18 @@ function Index() {
                   )}
                 </div>
               </Panel>
+
+              <Panel title="How it works">
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  AIWire pulls straight from the publishers' feeds. No rewriting, no algorithmic
+                  reshuffling. Press{" "}
+                  <kbd className="label-mono rounded border border-border px-1.5 py-0.5">/</kbd> to
+                  search, bookmark anything to read later.
+                </p>
+              </Panel>
+              </div>
             </aside>
+
           </div>
         )}
       </main>
