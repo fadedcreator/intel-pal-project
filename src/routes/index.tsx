@@ -288,20 +288,24 @@ function Index() {
           </span>
           <span className="h-4 w-px shrink-0 bg-border" />
           <div className="flex items-center gap-1 rounded-full bg-surface p-1">
-            {TIME_RANGES.map((r) => (
+            {SORTS.map((s) => (
               <button
-                key={r.label}
-                onClick={() => setRange(r.hours)}
+                key={s.id}
+                onClick={() => setSort(s.id)}
+                aria-pressed={sort === s.id}
                 className={`label-mono rounded-full px-3 py-1.5 transition-colors ${
-                  range === r.hours
+                  sort === s.id
                     ? "bg-wire text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                {r.label}
+                {s.label}
               </button>
             ))}
           </div>
+          {sort === "discussed" && hnLoading && (
+            <span className="label-mono shrink-0 text-muted-foreground">Reading HN…</span>
+          )}
           {source && (
             <button
               onClick={() => setSource(null)}
