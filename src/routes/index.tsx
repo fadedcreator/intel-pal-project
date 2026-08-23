@@ -288,20 +288,24 @@ function Index() {
           </span>
           <span className="h-4 w-px shrink-0 bg-border" />
           <div className="flex items-center gap-1 rounded-full bg-surface p-1">
-            {TIME_RANGES.map((r) => (
+            {SORTS.map((s) => (
               <button
-                key={r.label}
-                onClick={() => setRange(r.hours)}
+                key={s.id}
+                onClick={() => setSort(s.id)}
+                aria-pressed={sort === s.id}
                 className={`label-mono rounded-full px-3 py-1.5 transition-colors ${
-                  range === r.hours
+                  sort === s.id
                     ? "bg-wire text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                {r.label}
+                {s.label}
               </button>
             ))}
           </div>
+          {sort === "discussed" && hnLoading && (
+            <span className="label-mono shrink-0 text-muted-foreground">Reading HN…</span>
+          )}
           {source && (
             <button
               onClick={() => setSource(null)}
@@ -361,11 +365,11 @@ function Index() {
       <main className="mx-auto max-w-[1360px] px-6 py-12 lg:px-10 lg:py-16">
         <h1 className="sr-only">AIWire artificial intelligence news wire</h1>
 
-        {filtered.length === 0 ? (
+        {sorted.length === 0 ? (
           <div className="py-32 text-center">
             <p className="font-display text-xl font-semibold">Nothing on the wire</p>
             <p className="mt-2 text-sm text-muted-foreground">
-              No stories match those filters. Try widening the time range.
+              No stories match those filters. Try clearing the search or source.
             </p>
             <button
               onClick={clearAll}
@@ -386,19 +390,47 @@ function Index() {
 
               <section>
                 <SectionHeading
-                  label={dense ? "The wire" : "Latest"}
-                  meta={`${dense ? filtered.length : rest.length} stories`}
+                  label={
+                    dense
+                      ? "The wire"
+                      : sort === "trending"
+                        ? "Trending"
+                        : sort === "discussed"
+                          ? "Most discussed"
+                          : "Latest"
+                  }
+                  meta={`${dense ? sorted.length : rest.length} stories`}
                 />
                 {dense ? (
                   <ul className="divide-y divide-border/50">
-                    {filtered.map((a: Article) => (
+                    {sorted.map((a: Article) => (
                       <DenseRow key={a.id} article={a} saved={saved} onSave={toggle} />
                     ))}
                   </ul>
                 ) : (
                   <div className="grid items-start gap-6 sm:grid-cols-2 xl:gap-8">
                     {rest.map((a: Article) => (
-                      <StoryCard key={a.id} article={a} saved={saved} onSave={toggle} />
+                      <div
+                        key={a.id}
+                        className={
+                          sort === "discussed" && !hnStats[a.link] ? "opacity-55" : undefined
+                        }
+                      >
+                        <StoryCard article={a} saved={saved} onSave={toggle} />
+                        {sort === "discussed" && hnStats[a.link] && (
+                          <a
+                            href={hnStats[a.link]!.hnUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="label-mono mt-2 inline-flex items-center gap-3 text-wire"
+                          >
+                            <span>{hnStats[a.link]!.points} points</span>
+                            <span className="text-muted-foreground">
+                              {hnStats[a.link]!.comments} comments
+                            </span>
+                          </a>
+                        )}
+                      </div>
                     ))}
                   </div>
                 )}
@@ -406,7 +438,17 @@ function Index() {
             </div>
 
             <aside className="space-y-8 lg:sticky lg:top-40 lg:self-start">
+              <Panel title="How it works">
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  AIWire pulls straight from the publishers' feeds. No rewriting, no algorithmic
+                  reshuffling. Press{" "}
+                  <kbd className="label-mono rounded border border-border px-1.5 py-0.5">/</kbd> to
+                  search, bookmark anything to read later.
+                </p>
+              </Panel>
+
               <SignalBoard topics={topics} active={query} onPick={setQuery} />
+
 
               <Panel title="Sources">
                 <div className="space-y-6">
@@ -450,15 +492,6 @@ function Index() {
                     ) : null,
                   )}
                 </div>
-              </Panel>
-
-              <Panel title="How it works">
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  AIWire pulls straight from the publishers' feeds. No rewriting, no algorithmic
-                  reshuffling. Press{" "}
-                  <kbd className="label-mono rounded border border-border px-1.5 py-0.5">/</kbd> to
-                  search, bookmark anything to read later.
-                </p>
               </Panel>
             </aside>
           </div>
