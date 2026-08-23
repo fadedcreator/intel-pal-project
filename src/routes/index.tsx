@@ -135,10 +135,14 @@ function Index() {
   );
 
   const grouped = useMemo(() => {
-    const groups: Record<SourceKind, string[]> = { publication: [], newsletter: [] };
+    const groups = { company: [], publication: [], newsletter: [], youtube: [] } as Record<
+      SourceKind,
+      string[]
+    >;
     for (const s of sources) groups[SOURCE_META[s]?.kind ?? "publication"].push(s);
     return groups;
   }, [sources]);
+
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
