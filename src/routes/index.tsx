@@ -1,4 +1,4 @@
-import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Search,
@@ -229,6 +229,22 @@ function Index() {
             <Radio className="size-5 text-wire" strokeWidth={2.2} />
             <span className="font-display text-lg font-bold tracking-tight">AIWire</span>
           </a>
+
+          <nav className="hidden items-center gap-1 lg:flex">
+            {[
+              { to: "/sources", label: "Sources" },
+              { to: "/about", label: "About" },
+            ].map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="label-mono rounded-full px-3 py-1.5 text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
 
           <div className="relative ml-2 hidden min-w-0 flex-1 md:block">
             <Search className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -512,6 +528,17 @@ function Index() {
             <Radio className="size-4 text-wire" />
             AIWire
           </span>
+          <nav className="flex items-center gap-5">
+            <Link to="/sources" className="label-mono text-muted-foreground hover:text-foreground">
+              Sources
+            </Link>
+            <Link to="/about" className="label-mono text-muted-foreground hover:text-foreground">
+              About
+            </Link>
+            <Link to="/privacy" className="label-mono text-muted-foreground hover:text-foreground">
+              Privacy
+            </Link>
+          </nav>
           <span className="label-mono text-muted-foreground">
             {articles.length} stories · {sources.length} sources
           </span>
