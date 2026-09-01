@@ -97,6 +97,8 @@ function parseFeed(xml: string, source: string, kind: SourceKind): Article[] {
     const title = tag(block, ["title"]);
     const link = extractLink(block);
     if (!title || !link) continue;
+    if (kind === "youtube" && link.includes("/shorts/")) continue;
+
 
     const dateRaw = tag(block, ["pubDate", "published", "updated", "dc:date"]);
     const parsed = dateRaw ? new Date(decode(dateRaw)) : null;
