@@ -528,6 +528,17 @@ function Index() {
             <Radio className="size-4 text-wire" />
             AIWire
           </span>
+          <nav className="flex items-center gap-5">
+            <Link to="/sources" className="label-mono text-muted-foreground hover:text-foreground">
+              Sources
+            </Link>
+            <Link to="/about" className="label-mono text-muted-foreground hover:text-foreground">
+              About
+            </Link>
+            <Link to="/privacy" className="label-mono text-muted-foreground hover:text-foreground">
+              Privacy
+            </Link>
+          </nav>
           <span className="label-mono text-muted-foreground">
             {articles.length} stories · {sources.length} sources
           </span>
