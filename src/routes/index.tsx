@@ -14,7 +14,7 @@ import {
 import { getNews } from "@/lib/news.functions";
 import { getDiscussion } from "@/lib/hn.functions";
 import type { HnStat } from "@/lib/hn.server";
-import { SOURCE_META, type SourceKind } from "@/lib/sources";
+import { SOURCE_META, SOURCE_KINDS, KIND_LABELS, type SourceKind } from "@/lib/sources";
 import type { Article } from "@/lib/news.server";
 
 export const Route = createFileRoute("/")({
