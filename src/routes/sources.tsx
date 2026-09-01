@@ -14,7 +14,7 @@ export const Route = createFileRoute("/sources")({
       {
         name: "description",
         content:
-          "The 29 publications, company blogs, newsletters and YouTube channels that feed the AIWire news wire.",
+          "The publications, company blogs, newsletters and YouTube channels that feed the AIWire news wire.",
       },
       { property: "og:title", content: "Sources · AIWire" },
       {
