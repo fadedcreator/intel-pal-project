@@ -496,7 +496,11 @@ function Index() {
                   AIWire pulls straight from the publishers' feeds. No rewriting, no algorithmic
                   reshuffling. Press{" "}
                   <kbd className="label-mono rounded border border-border px-1.5 py-0.5">/</kbd> to
-                  search, bookmark anything to read later.
+                  search, bookmark anything to read later. Learn{" "}
+                  <Link to="/about" className="text-wire underline-offset-4 hover:underline">
+                    how it works
+                  </Link>
+                  .
                 </p>
               </Panel>
               </div>
