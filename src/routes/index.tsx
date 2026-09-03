@@ -229,6 +229,14 @@ function Index() {
             <Radio className="size-5 text-wire" strokeWidth={2.2} />
             <span className="font-display text-lg font-bold tracking-tight">AIWire</span>
           </a>
+          <Link
+            to="/about"
+            activeOptions={{ exact: true }}
+            className="label-mono ml-4 hidden text-muted-foreground transition-colors hover:text-foreground sm:inline"
+            activeProps={{ className: "label-mono ml-4 hidden text-wire sm:inline" }}
+          >
+            About
+          </Link>
 
           <div className="relative ml-2 hidden min-w-0 flex-1 md:block">
             <Search className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -496,11 +504,7 @@ function Index() {
                   AIWire pulls straight from the publishers' feeds. No rewriting, no algorithmic
                   reshuffling. Press{" "}
                   <kbd className="label-mono rounded border border-border px-1.5 py-0.5">/</kbd> to
-                  search, bookmark anything to read later. Learn{" "}
-                  <Link to="/about" className="text-wire underline-offset-4 hover:underline">
-                    how it works
-                  </Link>
-                  .
+                  search, bookmark anything to read later.
                 </p>
               </Panel>
               </div>
@@ -511,7 +515,7 @@ function Index() {
       </main>
 
       <footer className="border-t border-border/60 py-10">
-        <div className="mx-auto flex max-w-[1360px] flex-wrap items-center justify-between gap-4 px-6 lg:px-10">
+        <div className="mx-auto flex max-w-[1360px] flex-col items-center justify-center gap-4 px-6 text-center lg:px-10">
           <span className="label-mono flex items-center gap-2 text-muted-foreground">
             <Radio className="size-4 text-wire" />
             AIWire
@@ -532,6 +536,17 @@ function Index() {
           </span>
           <span className="label-mono text-muted-foreground">
             Headlines belong to their publishers
+          </span>
+          <span className="label-mono text-muted-foreground">
+            Questions?{" "}
+            <a
+              href="https://x.com/fadedcreator"
+              target="_blank"
+              rel="noreferrer"
+              className="text-wire underline-offset-4 hover:underline"
+            >
+              @fadedcreator on X
+            </a>
           </span>
         </div>
       </footer>

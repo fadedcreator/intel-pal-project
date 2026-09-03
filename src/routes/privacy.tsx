@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ArrowUpRight } from "lucide-react";
 
 import { PageShell } from "@/components/SiteChrome";
 
@@ -56,10 +57,12 @@ const SECTIONS: { title: string; body: string[] }[] = [
   {
     title: "Questions",
     body: [
-      "AIWire is operated by the site owner. For privacy questions, reach out via the contact address published by the site owner.",
+      "AIWire is operated by the site owner. For privacy questions, reach out on X:",
     ],
   },
 ];
+
+const X_URL = "https://x.com/fadedcreator";
 
 function PrivacyPage() {
   return (
@@ -77,6 +80,17 @@ function PrivacyPage() {
                 {p}
               </p>
             ))}
+            {s.title === "Questions" && (
+              <a
+                href={X_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="label-mono mt-3 inline-flex items-center gap-1.5 text-wire underline-offset-4 hover:underline"
+              >
+                @fadedcreator on X
+                <ArrowUpRight className="size-3.5" />
+              </a>
+            )}
           </section>
         ))}
         <p className="label-mono border-t border-border/60 pt-6 text-muted-foreground">

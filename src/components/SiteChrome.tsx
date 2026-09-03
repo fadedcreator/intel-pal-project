@@ -13,6 +13,7 @@ export function SiteHeader() {
         <nav className="ml-auto flex items-center gap-1">
           {[
             { to: "/", label: "Wire" },
+            { to: "/about", label: "About" },
             { to: "/privacy", label: "Privacy" },
           ].map((item) => (
             <Link
@@ -52,6 +53,17 @@ export function SiteFooter() {
         </nav>
         <span className="label-mono text-muted-foreground">
           Headlines belong to their publishers
+        </span>
+        <span className="label-mono text-muted-foreground">
+          Questions?{" "}
+          <a
+            href="https://x.com/fadedcreator"
+            target="_blank"
+            rel="noreferrer"
+            className="text-wire underline-offset-4 hover:underline"
+          >
+            @fadedcreator on X
+          </a>
         </span>
       </div>
     </footer>
