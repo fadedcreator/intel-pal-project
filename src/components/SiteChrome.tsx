@@ -13,8 +13,6 @@ export function SiteHeader() {
         <nav className="ml-auto flex items-center gap-1">
           {[
             { to: "/", label: "Wire" },
-            { to: "/sources", label: "Sources" },
-            { to: "/about", label: "About" },
             { to: "/privacy", label: "Privacy" },
           ].map((item) => (
             <Link
