@@ -56,10 +56,12 @@ const SECTIONS: { title: string; body: string[] }[] = [
   {
     title: "Questions",
     body: [
-      "AIWire is operated by the site owner. For privacy questions, reach out via the contact address published by the site owner.",
+      "AIWire is operated by the site owner. For privacy questions, reach out on X:",
     ],
   },
 ];
+
+const X_URL = "https://x.com/fadedcreator";
 
 function PrivacyPage() {
   return (
