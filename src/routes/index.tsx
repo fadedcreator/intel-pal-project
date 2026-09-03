@@ -230,22 +230,6 @@ function Index() {
             <span className="font-display text-lg font-bold tracking-tight">AIWire</span>
           </a>
 
-          <nav className="hidden items-center gap-1 lg:flex">
-            {[
-              { to: "/sources", label: "Sources" },
-              { to: "/about", label: "About" },
-            ].map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="label-mono rounded-full px-3 py-1.5 text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-
           <div className="relative ml-2 hidden min-w-0 flex-1 md:block">
             <Search className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" />
             <input
@@ -512,7 +496,11 @@ function Index() {
                   AIWire pulls straight from the publishers' feeds. No rewriting, no algorithmic
                   reshuffling. Press{" "}
                   <kbd className="label-mono rounded border border-border px-1.5 py-0.5">/</kbd> to
-                  search, bookmark anything to read later.
+                  search, bookmark anything to read later. Learn{" "}
+                  <Link to="/about" className="text-wire underline-offset-4 hover:underline">
+                    how it works
+                  </Link>
+                  .
                 </p>
               </Panel>
               </div>
