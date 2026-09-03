@@ -34,7 +34,7 @@ export function SiteHeader() {
 export function SiteFooter() {
   return (
     <footer className="border-t border-border/60 py-10">
-      <div className="mx-auto flex max-w-[1360px] flex-wrap items-center justify-between gap-4 px-6 lg:px-10">
+      <div className="mx-auto flex max-w-[1360px] flex-col items-center justify-center gap-4 px-6 text-center lg:px-10">
         <span className="label-mono flex items-center gap-2 text-muted-foreground">
           <Radio className="size-4 text-wire" />
           AIWire
