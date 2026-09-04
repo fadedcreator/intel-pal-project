@@ -11,7 +11,10 @@ import {
   X,
 } from "lucide-react";
 
+import { useServerFn } from "@tanstack/react-start";
+
 import { getNews } from "@/lib/news.functions";
+import { subscribeEmail } from "@/lib/subscribe.functions";
 import { getDiscussion } from "@/lib/hn.functions";
 import type { HnStat } from "@/lib/hn.server";
 import { SOURCE_META, SOURCE_KINDS, KIND_LABELS, type SourceKind } from "@/lib/sources";
