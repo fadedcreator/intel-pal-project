@@ -825,7 +825,7 @@ function StoryCard({ article, saved, onSave }: CardProps) {
 function DenseRow({ article, saved, onSave }: CardProps) {
   return (
     <li className="group flex items-center gap-4 py-3">
-      <span className="label-mono w-16 shrink-0 text-muted-foreground">
+      <span suppressHydrationWarning className="label-mono w-16 shrink-0 text-muted-foreground">
         {timeAgo(article.publishedAt)}
       </span>
       <span className="hidden w-36 shrink-0 truncate sm:block">
