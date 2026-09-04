@@ -575,7 +575,71 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
   );
 }
 
+function SubscribePanel() {
+  const subscribe = useServerFn(subscribeEmail);
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
+  const [message, setMessage] = useState("");
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const value = email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      setStatus("error");
+      setMessage("Enter a valid email address.");
+      return;
+    }
+    setStatus("sending");
+    setMessage("");
+    try {
+      const res = await subscribe({ data: { email: value } });
+      setStatus(res.ok ? "ok" : "error");
+      setMessage(res.message);
+      if (res.ok) setEmail("");
+    } catch {
+      setStatus("error");
+      setMessage("Could not subscribe right now. Please try again.");
+    }
+  }
+
+  return (
+    <Panel title="Newsletter">
+      <p className="text-sm leading-relaxed text-muted-foreground">
+        One email, the week's signal. No noise.
+      </p>
+      <form onSubmit={onSubmit} className="mt-4 space-y-2.5">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@domain.com"
+          maxLength={254}
+          aria-label="Email address"
+          className="w-full rounded-lg border border-border/70 bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/70 focus:border-wire focus:outline-none focus:ring-1 focus:ring-wire"
+        />
+        <button
+          type="submit"
+          disabled={status === "sending"}
+          className="label-mono w-full rounded-lg bg-wire px-3 py-2.5 text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
+        >
+          {status === "sending" ? "Sending..." : "Subscribe"}
+        </button>
+      </form>
+      {message && (
+        <p
+          className={`label-mono mt-3 leading-relaxed ${
+            status === "ok" ? "text-wire" : "text-destructive"
+          }`}
+        >
+          {message}
+        </p>
+      )}
+    </Panel>
+  );
+}
+
 type Topic = { term: string; count: number };
+
 
 const SPARK = [32, 48, 40, 62, 55, 74, 66, 85, 70, 92, 78, 96, 84, 100];
 
