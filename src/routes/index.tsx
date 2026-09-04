@@ -754,7 +754,7 @@ function LeadStory({ article, saved, onSave }: CardProps) {
           <div className="mb-4 flex items-center gap-3">
             <SourceTag source={article.source} />
             <span className="size-1 rounded-full bg-border" />
-            <span className="label-mono text-muted-foreground">{timeAgo(article.publishedAt)}</span>
+            <span suppressHydrationWarning className="label-mono text-muted-foreground">{timeAgo(article.publishedAt)}</span>
           </div>
           <h2 className="font-display text-3xl leading-[1.1] font-bold tracking-tight sm:text-[2.75rem]">
             {article.title}
@@ -800,7 +800,7 @@ function StoryCard({ article, saved, onSave }: CardProps) {
           <div className="mb-3 flex items-center gap-2.5">
             <SourceTag source={article.source} />
             <span className="size-1 rounded-full bg-border" />
-            <span className="label-mono text-muted-foreground">{timeAgo(article.publishedAt)}</span>
+            <span suppressHydrationWarning className="label-mono text-muted-foreground">{timeAgo(article.publishedAt)}</span>
           </div>
           <h3 className="font-display text-lg leading-snug font-semibold tracking-tight transition-colors group-hover:text-wire">
             {article.title}
