@@ -499,6 +499,8 @@ function Index() {
                 </div>
               </Panel>
 
+              <SubscribePanel />
+
               <Panel title="How it works">
                 <p className="text-sm leading-relaxed text-muted-foreground">
                   AIWire pulls straight from the publishers' feeds. No rewriting, no algorithmic
