@@ -6,6 +6,7 @@ import {
   ArrowUpRight,
   Bookmark,
   LayoutGrid,
+  Mail,
   Rows3,
   Radio,
   X,
@@ -502,8 +503,6 @@ function Index() {
                 </div>
               </Panel>
 
-              <SubscribePanel />
-
               <Panel title="How it works">
                 <p className="text-sm leading-relaxed text-muted-foreground">
                   AIWire pulls straight from the publishers' feeds. No rewriting, no algorithmic
@@ -578,11 +577,39 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
   );
 }
 
-function SubscribePanel() {
+function NewsletterSignup() {
   const subscribe = useServerFn(subscribeEmail);
+  const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
   const [message, setMessage] = useState("");
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    function onDown(e: MouseEvent) {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (status !== "ok") return;
+    const t = setTimeout(() => {
+      setOpen(false);
+      setStatus("idle");
+      setMessage("");
+    }, 4000);
+    return () => clearTimeout(t);
+  }, [status]);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -606,38 +633,55 @@ function SubscribePanel() {
   }
 
   return (
-    <Panel title="Newsletter">
-      <p className="text-sm leading-relaxed text-muted-foreground">
-        One email, the week's signal. No noise.
-      </p>
-      <form onSubmit={onSubmit} className="mt-4 space-y-2.5">
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="you@domain.com"
-          maxLength={254}
-          aria-label="Email address"
-          className="w-full rounded-lg border border-border/70 bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/70 focus:border-wire focus:outline-none focus:ring-1 focus:ring-wire"
-        />
-        <button
-          type="submit"
-          disabled={status === "sending"}
-          className="label-mono w-full rounded-lg bg-wire px-3 py-2.5 text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
-        >
-          {status === "sending" ? "Sending..." : "Subscribe"}
-        </button>
-      </form>
-      {message && (
-        <p
-          className={`label-mono mt-3 leading-relaxed ${
-            status === "ok" ? "text-wire" : "text-destructive"
-          }`}
-        >
-          {message}
-        </p>
+    <div ref={rootRef} className="relative ml-auto shrink-0">
+      <button
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className={`label-mono flex items-center gap-1.5 rounded-full border px-3 py-1.5 transition-colors ${
+          open
+            ? "border-wire bg-wire text-primary-foreground"
+            : "border-wire/50 text-wire hover:bg-wire/10"
+        }`}
+      >
+        <Mail className="size-3.5" />
+        Newsletter
+      </button>
+      {open && (
+        <div className="animate-in fade-in zoom-in-95 absolute top-full right-0 z-40 mt-2 w-72 origin-top-right rounded-xl border border-border/70 bg-surface p-4 shadow-xl duration-150">
+          <p className="label-mono text-foreground">Newsletter</p>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            One email, the week's signal. No noise.
+          </p>
+          <form onSubmit={onSubmit} className="mt-3 space-y-2.5">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@domain.com"
+              maxLength={254}
+              aria-label="Email address"
+              className="w-full rounded-lg border border-border/70 bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/70 focus:border-wire focus:ring-1 focus:ring-wire focus:outline-none"
+            />
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="label-mono w-full rounded-lg bg-wire px-3 py-2.5 text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
+            >
+              {status === "sending" ? "Sending..." : "Subscribe"}
+            </button>
+          </form>
+          {message && (
+            <p
+              className={`label-mono mt-3 leading-relaxed ${
+                status === "ok" ? "text-wire" : "text-destructive"
+              }`}
+            >
+              {message}
+            </p>
+          )}
+        </div>
       )}
-    </Panel>
+    </div>
   );
 }
 
