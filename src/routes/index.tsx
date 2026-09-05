@@ -6,6 +6,7 @@ import {
   ArrowUpRight,
   Bookmark,
   LayoutGrid,
+  Mail,
   Rows3,
   Radio,
   X,
@@ -501,8 +502,6 @@ function Index() {
                   )}
                 </div>
               </Panel>
-
-              <SubscribePanel />
 
               <Panel title="How it works">
                 <p className="text-sm leading-relaxed text-muted-foreground">
