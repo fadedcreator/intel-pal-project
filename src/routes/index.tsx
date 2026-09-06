@@ -331,7 +331,8 @@ function Index() {
               <X className="size-3" />
             </button>
           )}
-          <span className="label-mono ml-auto shrink-0 text-muted-foreground">
+          <NewsletterSignup />
+          <span className="label-mono shrink-0 text-muted-foreground">
             {filtered.length} stories
           </span>
           {hasFilters && (
@@ -652,7 +653,7 @@ function NewsletterSignup() {
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
             One email, the week's signal. No noise.
           </p>
-          <form onSubmit={onSubmit} className="mt-3 space-y-2.5">
+          <form onSubmit={onSubmit} noValidate className="mt-3 space-y-2.5">
             <input
               type="email"
               value={email}
