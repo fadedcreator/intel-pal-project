@@ -653,7 +653,7 @@ function NewsletterSignup() {
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
             One email, the week's signal. No noise.
           </p>
-          <form onSubmit={onSubmit} className="mt-3 space-y-2.5">
+          <form onSubmit={onSubmit} noValidate className="mt-3 space-y-2.5">
             <input
               type="email"
               value={email}
