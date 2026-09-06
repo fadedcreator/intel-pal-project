@@ -331,7 +331,8 @@ function Index() {
               <X className="size-3" />
             </button>
           )}
-          <span className="label-mono ml-auto shrink-0 text-muted-foreground">
+          <NewsletterSignup />
+          <span className="label-mono shrink-0 text-muted-foreground">
             {filtered.length} stories
           </span>
           {hasFilters && (
