@@ -218,10 +218,19 @@ function Index() {
   const hasFilters = Boolean(query || source || onlySaved || sort !== "latest");
 
   const refresh = async () => {
+    if (refreshing) return;
     setRefreshing(true);
-    await router.invalidate();
-    setRefreshing(false);
+    try {
+      const fresh = await fetchNews();
+      setData(fresh);
+      setHnStats({});
+    } catch {
+      /* keep current wire on failure */
+    } finally {
+      setRefreshing(false);
+    }
   };
+
 
   const clearAll = () => {
     setQuery("");
