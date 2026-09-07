@@ -36,36 +36,38 @@ export function SiteHeader() {
 export function SiteFooter() {
   return (
     <footer className="border-t border-border/60 py-10">
-      <div className="mx-auto flex max-w-[1360px] flex-col items-center justify-center gap-4 px-6 text-center lg:px-10">
+      <div className="mx-auto flex max-w-[1360px] flex-col items-center gap-6 px-6 lg:px-10">
         <span className="label-mono flex items-center gap-2 text-muted-foreground">
           <Radio className="size-4 text-wire" />
           AIWire
         </span>
-        <nav className="flex items-center gap-5">
-          <Link to="/sources" className="label-mono text-muted-foreground hover:text-foreground">
-            Sources
-          </Link>
-          <Link to="/about" className="label-mono text-muted-foreground hover:text-foreground">
-            About
-          </Link>
-          <Link to="/privacy" className="label-mono text-muted-foreground hover:text-foreground">
-            Privacy
-          </Link>
-        </nav>
-        <span className="label-mono text-muted-foreground">
-          Headlines belong to their publishers
-        </span>
-        <span className="label-mono text-muted-foreground">
-          Questions?{" "}
-          <a
-            href="https://x.com/fadedcreator"
-            target="_blank"
-            rel="noreferrer"
-            className="text-wire underline-offset-4 hover:underline"
-          >
-            @fadedcreator on X
-          </a>
-        </span>
+        <div className="flex w-full flex-col items-center justify-between gap-4 sm:flex-row">
+          <nav className="flex items-center gap-5">
+            <Link to="/sources" className="label-mono text-muted-foreground hover:text-foreground">
+              Sources
+            </Link>
+            <Link to="/about" className="label-mono text-muted-foreground hover:text-foreground">
+              About
+            </Link>
+            <Link to="/privacy" className="label-mono text-muted-foreground hover:text-foreground">
+              Privacy
+            </Link>
+          </nav>
+          <span className="label-mono text-muted-foreground">
+            Headlines belong to their publishers
+          </span>
+          <span className="label-mono text-muted-foreground">
+            Questions?{" "}
+            <a
+              href="https://x.com/fadedcreator"
+              target="_blank"
+              rel="noreferrer"
+              className="text-wire underline-offset-4 hover:underline"
+            >
+              @fadedcreator on X
+            </a>
+          </span>
+        </div>
       </div>
     </footer>
   );
