@@ -81,21 +81,35 @@ function PrivacyPage() {
       title="Privacy notice"
       lede="Plain-language summary of what AIWire does and does not do with your data."
     >
-      <div className="max-w-3xl space-y-10">
+      <div className="grid gap-6 lg:grid-cols-2">
         {SECTIONS.map((s) => (
-          <section key={s.title}>
+          <section
+            key={s.title}
+            className="rounded-2xl border border-border/60 bg-surface p-6 lg:p-8"
+          >
             <h2 className="font-display text-xl font-semibold text-foreground">{s.title}</h2>
             {s.body.map((p, i) => (
-              <p key={i} className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              <p key={i} className="mt-4 text-sm leading-relaxed text-muted-foreground">
                 {p}
               </p>
             ))}
+            {s.title === "Newsletter" && (
+              <a
+                href={BEEHIIV_PRIVACY}
+                target="_blank"
+                rel="noreferrer"
+                className="label-mono mt-5 inline-flex items-center gap-1.5 text-wire underline-offset-4 hover:underline"
+              >
+                Beehiiv privacy policy
+                <ArrowUpRight className="size-3.5" />
+              </a>
+            )}
             {s.title === "Questions" && (
               <a
                 href={X_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="label-mono mt-3 inline-flex items-center gap-1.5 text-wire underline-offset-4 hover:underline"
+                className="label-mono mt-5 inline-flex items-center gap-1.5 text-wire underline-offset-4 hover:underline"
               >
                 @fadedcreator on X
                 <ArrowUpRight className="size-3.5" />
@@ -103,10 +117,11 @@ function PrivacyPage() {
             )}
           </section>
         ))}
-        <p className="label-mono border-t border-border/60 pt-6 text-muted-foreground">
-          Last updated September 2026
-        </p>
       </div>
+      <p className="label-mono mt-12 border-t border-border/60 pt-8 text-muted-foreground">
+        Last updated September 2026
+      </p>
+
     </PageShell>
   );
 }
