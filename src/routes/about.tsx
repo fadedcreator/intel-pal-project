@@ -65,9 +65,9 @@ function AboutPage() {
       title="Every AI story that matters, one page"
       lede={`AIWire is a live news wire for artificial intelligence. It pulls from ${FEEDS.length} trusted sources: the labs building the models, the publications covering the industry, the insiders writing the newsletters, and the channels explaining the research.`}
     >
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {FEATURES.map((f) => (
-          <div key={f.title} className="rounded-xl border border-border/60 bg-surface p-5">
+          <div key={f.title} className="rounded-xl border border-border/60 bg-surface p-6">
             <f.icon className="size-5 text-wire" strokeWidth={2} />
             <h2 className="font-display mt-3 text-base font-semibold text-foreground">{f.title}</h2>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.body}</p>
@@ -75,7 +75,7 @@ function AboutPage() {
         ))}
       </div>
 
-      <section className="mt-14 grid gap-4 lg:grid-cols-2">
+      <section className="mt-16 grid gap-6 lg:grid-cols-2">
         <div className="rounded-2xl border border-border/60 bg-surface p-6 lg:p-8">
           <h2 className="label-mono text-foreground">Editorial stance</h2>
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">

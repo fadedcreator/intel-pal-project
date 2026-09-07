@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Search,
@@ -107,9 +107,15 @@ function SourceTag({ source }: { source: string }) {
 }
 
 function Index() {
-  const { articles, topics, fetchedAt } = Route.useLoaderData();
-  const router = useRouter();
+  const loaderData = Route.useLoaderData();
+  const [data, setData] = useState(loaderData);
+  useEffect(() => {
+    setData(loaderData);
+  }, [loaderData]);
+  const { articles, topics, fetchedAt } = data;
+  const fetchNews = useServerFn(getNews);
   const { saved, toggle } = useSaved();
+
 
   const [query, setQuery] = useState("");
   const [source, setSource] = useState<string | null>(null);
@@ -212,10 +218,19 @@ function Index() {
   const hasFilters = Boolean(query || source || onlySaved || sort !== "latest");
 
   const refresh = async () => {
+    if (refreshing) return;
     setRefreshing(true);
-    await router.invalidate();
-    setRefreshing(false);
+    try {
+      const fresh = await fetchNews();
+      setData(fresh);
+      setHnStats({});
+    } catch {
+      /* keep current wire on failure */
+    } finally {
+      setRefreshing(false);
+    }
   };
+
 
   const clearAll = () => {
     setQuery("");

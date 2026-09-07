@@ -52,7 +52,7 @@ function SourcesPage() {
       title="Sources"
       lede={`AIWire reads ${FEEDS.length} feeds directly: company blogs, publications, newsletters and YouTube channels. Every headline links out to the original publisher.`}
     >
-      <div className="space-y-14">
+      <div className="space-y-16">
         {SOURCE_KINDS.map((kind) => {
           const feeds = FEEDS.filter((f) => f.kind === kind);
           if (feeds.length === 0) return null;
@@ -68,7 +68,7 @@ function SourcesPage() {
                 </span>
                 <div className="h-px flex-1 bg-border/60" />
               </div>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {feeds.map((feed) => (
                   <a
                     key={feed.source}
@@ -98,9 +98,9 @@ function SourcesPage() {
         })}
       </div>
 
-      <section className="mt-16 rounded-2xl border border-border/60 bg-surface p-6 lg:p-8">
+      <section className="mt-20 rounded-2xl border border-border/60 bg-surface p-6 lg:p-8">
         <h2 className="label-mono text-foreground">How feeds are handled</h2>
-        <ul className="mt-4 grid gap-3 text-sm leading-relaxed text-muted-foreground sm:grid-cols-2">
+        <ul className="mt-5 grid gap-4 text-sm sm:gap-x-10 leading-relaxed text-muted-foreground sm:grid-cols-2">
           <li>Feeds are fetched server-side and refreshed on every load.</li>
           <li>Headlines are deduplicated across sources by title.</li>
           <li>Every source is guaranteed representation in the feed.</li>
