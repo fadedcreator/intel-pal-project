@@ -33,8 +33,8 @@ const SECTIONS: { title: string; body: string[] }[] = [
   {
     title: "The short version",
     body: [
-      "AIWire is a read-only news aggregator. The site itself needs no account and sets no tracking cookies or advertising trackers. Everything on the wire can be read without signing up.",
-      "The one exception is the optional newsletter. If you choose to subscribe, your email address is sent to Beehiiv, the service that runs the newsletter. See the Newsletter section below.",
+      "AIWire is a read-only news aggregator. The site itself needs no account and sets no tracking cookies or advertising trackers.",
+      "The only thing you can sign up for is the optional newsletter. If you choose to subscribe, your email address is sent to Beehiiv, the service that runs the newsletter. See the Newsletter section below.",
     ],
   },
   {
