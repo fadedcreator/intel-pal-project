@@ -93,7 +93,7 @@ export function PageShell({
           </h1>
           <p className="mt-5 text-lg leading-relaxed text-muted-foreground">{lede}</p>
         </div>
-        <div className="mt-12">{children}</div>
+        <div className="mt-14">{children}</div>
       </main>
       <SiteFooter />
     </div>
