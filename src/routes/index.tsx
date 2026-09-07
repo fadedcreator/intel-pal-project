@@ -107,9 +107,15 @@ function SourceTag({ source }: { source: string }) {
 }
 
 function Index() {
-  const { articles, topics, fetchedAt } = Route.useLoaderData();
-  const router = useRouter();
+  const loaderData = Route.useLoaderData();
+  const [data, setData] = useState(loaderData);
+  useEffect(() => {
+    setData(loaderData);
+  }, [loaderData]);
+  const { articles, topics, fetchedAt } = data;
+  const fetchNews = useServerFn(getNews);
   const { saved, toggle } = useSaved();
+
 
   const [query, setQuery] = useState("");
   const [source, setSource] = useState<string | null>(null);
