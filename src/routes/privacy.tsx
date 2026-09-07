@@ -73,6 +73,7 @@ const SECTIONS: { title: string; body: string[] }[] = [
 
 
 const X_URL = "https://x.com/fadedcreator";
+const BEEHIIV_PRIVACY = "https://www.beehiiv.com/privacy";
 
 function PrivacyPage() {
   return (
