@@ -278,6 +278,7 @@ function Index() {
           </div>
 
           <div className="ml-auto flex items-center gap-2">
+            <NewsletterSignup />
             <button
               onClick={() => setOnlySaved((v) => !v)}
               aria-pressed={onlySaved}
@@ -319,7 +320,7 @@ function Index() {
                 key={s.id}
                 onClick={() => setSort(s.id)}
                 aria-pressed={sort === s.id}
-                className={`label-mono flex-1 rounded-full px-3 py-1.5 text-center text-xs transition-colors sm:flex-none sm:text-[0.8125rem] ${
+                className={`label-mono flex-1 rounded-full px-3 py-1.5 text-center text-sm transition-colors sm:flex-none sm:text-[0.8125rem] ${
                   sort === s.id
                     ? "bg-wire text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground"
@@ -341,7 +342,6 @@ function Index() {
               <X className="size-3" />
             </button>
           )}
-          <NewsletterSignup />
           <span className="label-mono hidden shrink-0 text-muted-foreground sm:inline">
             {filtered.length} stories
           </span>
@@ -647,7 +647,7 @@ function NewsletterSignup() {
   }
 
   return (
-    <div ref={rootRef} className="relative ml-0 shrink-0 sm:ml-auto">
+    <div ref={rootRef} className="relative shrink-0">
       <button
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
