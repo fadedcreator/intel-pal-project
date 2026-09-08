@@ -194,5 +194,6 @@ export const FEEDS: SourceDef[] = [
   },
 ];
 
-export const SOURCE_META: Record<string, { kind: SourceKind; accent: string }> =
-  Object.fromEntries(FEEDS.map((f) => [f.source, { kind: f.kind, accent: f.accent }]));
+export const SOURCE_META: Record<string, { kind: SourceKind; accent: string }> = Object.fromEntries(
+  FEEDS.map((f) => [f.source, { kind: f.kind, accent: f.accent }]),
+);
