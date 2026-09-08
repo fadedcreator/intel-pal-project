@@ -163,9 +163,8 @@
 
 @utility label-mono {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
 }
 
 @utility ticker-mono {
