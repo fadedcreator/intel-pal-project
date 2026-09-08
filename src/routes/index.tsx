@@ -251,8 +251,8 @@ function Index() {
           <Link
             to="/about"
             activeOptions={{ exact: true }}
-            className="label-mono ml-4 hidden text-muted-foreground transition-colors hover:text-foreground sm:inline"
-            activeProps={{ className: "label-mono ml-4 hidden text-wire sm:inline" }}
+            className="label-mono ml-4 hidden translate-y-[3px] text-muted-foreground transition-colors hover:text-foreground sm:inline"
+            activeProps={{ className: "label-mono ml-4 hidden translate-y-[3px] text-wire sm:inline" }}
           >
             About
           </Link>
