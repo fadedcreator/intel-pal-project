@@ -300,7 +300,7 @@ function Index() {
             </button>
             <button
               onClick={refresh}
-              className="flex h-10 items-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+              className="hidden h-10 items-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 sm:flex"
             >
               <RefreshCw className={`size-4 ${refreshing ? "animate-spin" : ""}`} />
               <span className="hidden sm:inline">Refresh</span>
