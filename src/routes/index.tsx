@@ -236,7 +236,7 @@ function Index() {
   return (
     <div className="min-h-screen">
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/85 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-[1360px] items-center gap-4 px-6 lg:px-10">
+        <div className="relative mx-auto flex h-16 max-w-[1360px] items-center gap-4 px-6 lg:px-10">
           <a href="/" className="flex shrink-0 items-center gap-2.5">
             <Radio className="size-5 text-wire" strokeWidth={2.2} />
             <span className="font-display text-lg font-bold tracking-tight">AIWire</span>
@@ -404,7 +404,7 @@ function Index() {
             </button>
           </div>
         ) : (
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-16">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-16">
             <div>
               {lead && !dense && (
                 <section className="mb-16">
@@ -490,7 +490,7 @@ function Index() {
                                       style={{ backgroundColor: accentOf(s) }}
                                     />
                                     <span
-                                      className={`truncate transition-colors ${
+                                      className={`min-w-0 shrink truncate transition-colors ${
                                         isActive
                                           ? "font-medium text-foreground"
                                           : "text-muted-foreground group-hover:text-foreground"
@@ -647,7 +647,7 @@ function NewsletterSignup() {
   }
 
   return (
-    <div ref={rootRef} className="relative shrink-0">
+    <div ref={rootRef} className="shrink-0 sm:relative">
       <button
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
@@ -658,10 +658,10 @@ function NewsletterSignup() {
         }`}
       >
         <Mail className="size-3.5" />
-        Newsletter
+        <span className="hidden min-[360px]:inline">Newsletter</span>
       </button>
       {open && (
-        <div className="animate-in fade-in zoom-in-95 absolute top-full right-0 z-40 mt-2 w-72 origin-top-right rounded-xl border border-border/70 bg-surface p-4 shadow-xl duration-150">
+        <div className="animate-in fade-in zoom-in-95 absolute left-4 right-4 top-full z-40 mt-2 w-auto origin-top rounded-xl border border-border/70 bg-surface p-4 shadow-xl duration-150 sm:left-auto sm:right-0 sm:w-72 sm:origin-top-right">
           <p className="label-mono text-foreground">Newsletter</p>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
             One email, the week's signal. No noise.
@@ -896,7 +896,7 @@ function DenseRow({ article, saved, onSave }: CardProps) {
         href={article.link}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex-1 truncate text-sm font-medium transition-colors group-hover:text-wire"
+        className="min-w-0 flex-1 truncate text-sm font-medium transition-colors group-hover:text-wire"
       >
         {article.title}
       </a>
