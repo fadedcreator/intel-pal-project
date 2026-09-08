@@ -12,14 +12,18 @@ Remove the "Sources" and "About" links from the header navigation next to the AI
 ## Changes
 
 ### 1. `src/routes/index.tsx` — remove header nav
+
 - Delete the `<nav>` block (lines 233-246) that renders Sources/About links next to the logo. The logo, search bar, and action buttons stay.
 
 ### 2. `src/components/SiteChrome.tsx` — trim SiteHeader nav
+
 - Remove the "Sources" and "About" entries from the nav array in `SiteHeader`, leaving "Wire" and "Privacy" (the same trim applied to both headers so the chrome is consistent across pages).
 
 ### 3. `src/routes/index.tsx` — link "How it works" to About
+
 - In the "How it works" `Panel` (lines 510-517), wrap the words "how it works" in a `<Link to="/about">` styled to match the existing wire-accent link treatment used elsewhere (e.g. `text-wire underline-offset-4 hover:underline`). `Link` is already imported at the top of the file.
 
 ## Verification
+
 - Build the app and load the home page: no Sources/About links next to the logo; "How it works" panel links to /about.
 - Visit /about, /sources, /privacy: their headers show only Wire + Privacy; footers still offer Sources/About/Privacy.

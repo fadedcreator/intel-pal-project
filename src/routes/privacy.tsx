@@ -65,12 +65,9 @@ const SECTIONS: { title: string; body: string[] }[] = [
   },
   {
     title: "Questions",
-    body: [
-      "AIWire is operated by the site owner. For privacy questions, reach out on X:",
-    ],
+    body: ["AIWire is operated by the site owner. For privacy questions, reach out on X:"],
   },
 ];
-
 
 const X_URL = "https://x.com/fadedcreator";
 const BEEHIIV_PRIVACY = "https://www.beehiiv.com/privacy";
@@ -122,7 +119,6 @@ function PrivacyPage() {
       <p className="label-mono mt-12 border-t border-border/60 pt-8 text-muted-foreground">
         Last updated September 2026
       </p>
-
     </PageShell>
   );
 }

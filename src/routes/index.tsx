@@ -53,7 +53,6 @@ const SORTS = [
 
 type SortId = (typeof SORTS)[number]["id"];
 
-
 const FALLBACK_ACCENT = "var(--wire)";
 
 function accentOf(source: string) {
@@ -116,7 +115,6 @@ function Index() {
   const fetchNews = useServerFn(getNews);
   const { saved, toggle } = useSaved();
 
-
   const [query, setQuery] = useState("");
   const [source, setSource] = useState<string | null>(null);
   const [sort, setSort] = useState<SortId>("latest");
@@ -152,7 +150,6 @@ function Index() {
     for (const s of sources) groups[SOURCE_META[s]?.kind ?? "publication"].push(s);
     return groups;
   }, [sources]);
-
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -202,9 +199,7 @@ function Index() {
         // Fresher stories break ties inside the same signal band.
         return s;
       };
-      return list.sort(
-        (a, b) => score(b) - score(a) || b.publishedAt.localeCompare(a.publishedAt),
-      );
+      return list.sort((a, b) => score(b) - score(a) || b.publishedAt.localeCompare(a.publishedAt));
     }
 
     return list.sort((a, b) => {
@@ -231,14 +226,12 @@ function Index() {
     }
   };
 
-
   const clearAll = () => {
     setQuery("");
     setSource(null);
     setSort("latest");
     setOnlySaved(false);
   };
-
 
   return (
     <div className="min-h-screen">
@@ -252,7 +245,9 @@ function Index() {
             to="/about"
             activeOptions={{ exact: true }}
             className="label-mono ml-4 hidden translate-y-[3px] text-muted-foreground transition-colors hover:text-foreground sm:inline"
-            activeProps={{ className: "label-mono ml-4 hidden translate-y-[3px] text-wire sm:inline" }}
+            activeProps={{
+              className: "label-mono ml-4 hidden translate-y-[3px] text-wire sm:inline",
+            }}
           >
             About
           </Link>
@@ -364,14 +359,12 @@ function Index() {
       <div
         className="overflow-hidden border-b border-border/60 bg-surface/50"
         style={{
-          maskImage:
-            "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+          maskImage: "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
           WebkitMaskImage:
             "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
         }}
       >
         <div className="ticker flex w-max gap-12 py-2.5">
-
           {[0, 1].map((dup) => (
             <div key={dup} className="flex shrink-0 gap-12" aria-hidden={dup === 1}>
               {articles.slice(0, 12).map((a: Article) => (
@@ -471,65 +464,65 @@ function Index() {
 
             <aside className="lg:sticky lg:top-40 lg:self-start lg:max-h-[calc(100vh-11rem)] lg:overflow-y-auto lg:pr-2 sidebar-scroll">
               <div className="space-y-8">
-              <SignalBoard topics={topics} active={query} onPick={setQuery} />
+                <SignalBoard topics={topics} active={query} onPick={setQuery} />
 
-              <Panel title="Sources">
+                <Panel title="Sources">
+                  <div className="space-y-6">
+                    {SOURCE_KINDS.map((kind) =>
+                      grouped[kind].length ? (
+                        <div key={kind}>
+                          <p className="label-mono mb-3 text-muted-foreground/70">
+                            {KIND_LABELS[kind]}
+                          </p>
 
-                <div className="space-y-6">
-                  {SOURCE_KINDS.map((kind) =>
-                    grouped[kind].length ? (
-                      <div key={kind}>
-                        <p className="label-mono mb-3 text-muted-foreground/70">
-                          {KIND_LABELS[kind]}
-                        </p>
-
-                        <ul className="space-y-2.5">
-                          {grouped[kind].map((s) => {
-                            const count = articles.filter((a: Article) => a.source === s).length;
-                            const isActive = source === s;
-                            return (
-                              <li key={s}>
-                                <button
-                                  onClick={() => setSource(isActive ? null : s)}
-                                  className="group flex w-full items-center gap-2.5 text-left text-sm"
-                                >
-                                  <span
-                                    className="size-1.5 shrink-0 rounded-full"
-                                    style={{ backgroundColor: accentOf(s) }}
-                                  />
-                                  <span
-                                    className={`truncate transition-colors ${
-                                      isActive
-                                        ? "font-medium text-foreground"
-                                        : "text-muted-foreground group-hover:text-foreground"
-                                    }`}
+                          <ul className="space-y-2.5">
+                            {grouped[kind].map((s) => {
+                              const count = articles.filter((a: Article) => a.source === s).length;
+                              const isActive = source === s;
+                              return (
+                                <li key={s}>
+                                  <button
+                                    onClick={() => setSource(isActive ? null : s)}
+                                    className="group flex w-full items-center gap-2.5 text-left text-sm"
                                   >
-                                    {s}
-                                  </span>
-                                  <span className="h-px flex-1 bg-border/70" />
-                                  <span className="label-mono text-muted-foreground">{count}</span>
-                                </button>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </div>
-                    ) : null,
-                  )}
-                </div>
-              </Panel>
+                                    <span
+                                      className="size-1.5 shrink-0 rounded-full"
+                                      style={{ backgroundColor: accentOf(s) }}
+                                    />
+                                    <span
+                                      className={`truncate transition-colors ${
+                                        isActive
+                                          ? "font-medium text-foreground"
+                                          : "text-muted-foreground group-hover:text-foreground"
+                                      }`}
+                                    >
+                                      {s}
+                                    </span>
+                                    <span className="h-px flex-1 bg-border/70" />
+                                    <span className="label-mono text-muted-foreground">
+                                      {count}
+                                    </span>
+                                  </button>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      ) : null,
+                    )}
+                  </div>
+                </Panel>
 
-              <Panel title="How it works">
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  AIWire pulls straight from the publishers' feeds. No rewriting, no algorithmic
-                  reshuffling. Press{" "}
-                  <kbd className="label-mono rounded border border-border px-1.5 py-0.5">/</kbd> to
-                  search, bookmark anything to read later.
-                </p>
-              </Panel>
+                <Panel title="How it works">
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    AIWire pulls straight from the publishers' feeds. No rewriting, no algorithmic
+                    reshuffling. Press{" "}
+                    <kbd className="label-mono rounded border border-border px-1.5 py-0.5">/</kbd>{" "}
+                    to search, bookmark anything to read later.
+                  </p>
+                </Panel>
               </div>
             </aside>
-
           </div>
         )}
       </main>
@@ -545,13 +538,19 @@ function Index() {
               Headlines belong to their publishers
             </span>
             <nav className="flex items-center justify-center gap-5">
-              <Link to="/sources" className="label-mono text-muted-foreground hover:text-foreground">
+              <Link
+                to="/sources"
+                className="label-mono text-muted-foreground hover:text-foreground"
+              >
                 Sources
               </Link>
               <Link to="/about" className="label-mono text-muted-foreground hover:text-foreground">
                 About
               </Link>
-              <Link to="/privacy" className="label-mono text-muted-foreground hover:text-foreground">
+              <Link
+                to="/privacy"
+                className="label-mono text-muted-foreground hover:text-foreground"
+              >
                 Privacy
               </Link>
             </nav>
@@ -702,7 +701,6 @@ function NewsletterSignup() {
 
 type Topic = { term: string; count: number };
 
-
 const SPARK = [32, 48, 40, 62, 55, 74, 66, 85, 70, 92, 78, 96, 84, 100];
 
 function SignalBoard({
@@ -813,7 +811,9 @@ function LeadStory({ article, saved, onSave }: CardProps) {
           <div className="mb-4 flex items-center gap-3">
             <SourceTag source={article.source} />
             <span className="size-1 rounded-full bg-border" />
-            <span suppressHydrationWarning className="label-mono text-muted-foreground">{timeAgo(article.publishedAt)}</span>
+            <span suppressHydrationWarning className="label-mono text-muted-foreground">
+              {timeAgo(article.publishedAt)}
+            </span>
           </div>
           <h2 className="font-display text-3xl leading-[1.1] font-bold tracking-tight sm:text-[2.75rem]">
             {article.title}
@@ -859,7 +859,9 @@ function StoryCard({ article, saved, onSave }: CardProps) {
           <div className="mb-3 flex items-center gap-2.5">
             <SourceTag source={article.source} />
             <span className="size-1 rounded-full bg-border" />
-            <span suppressHydrationWarning className="label-mono text-muted-foreground">{timeAgo(article.publishedAt)}</span>
+            <span suppressHydrationWarning className="label-mono text-muted-foreground">
+              {timeAgo(article.publishedAt)}
+            </span>
           </div>
           <h3 className="font-display text-lg leading-snug font-semibold tracking-tight transition-colors group-hover:text-wire">
             {article.title}

@@ -17,8 +17,6 @@ type Feed = SourceDef;
 
 export { FEEDS };
 
-
-
 function entities(input: string): string {
   return input
     .replace(/&nbsp;/g, " ")
@@ -99,7 +97,6 @@ function parseFeed(xml: string, source: string, kind: SourceKind): Article[] {
     if (!title || !link) continue;
     if (kind === "youtube" && link.includes("/shorts/")) continue;
 
-
     const dateRaw = tag(block, ["pubDate", "published", "updated", "dc:date"]);
     const parsed = dateRaw ? new Date(decode(dateRaw)) : null;
     const publishedAt =
@@ -163,7 +160,9 @@ export async function loadArticles(): Promise<{ articles: Article[]; fetchedAt: 
     featured.push(a);
   }
 
-  const fill = deduped.filter((a) => !picked.has(a.id)).slice(0, Math.max(0, 110 - featured.length));
+  const fill = deduped
+    .filter((a) => !picked.has(a.id))
+    .slice(0, Math.max(0, 110 - featured.length));
   const articles = [...featured, ...fill].sort((a, b) =>
     b.publishedAt.localeCompare(a.publishedAt),
   );
