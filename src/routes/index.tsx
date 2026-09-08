@@ -235,7 +235,7 @@ function Index() {
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-30 border-b border-border/60 bg-background/85 backdrop-blur-xl">
+      <header className="sticky top-0 z-30 border-b border-border/60 bg-background/85 pb-3.5 backdrop-blur-xl">
         <div className="relative mx-auto flex h-16 max-w-[1360px] items-center gap-4 px-6 lg:px-10">
           <a href="/" className="flex shrink-0 items-center gap-2.5">
             <Radio className="size-5 text-wire" strokeWidth={2.2} />
@@ -357,7 +357,7 @@ function Index() {
       </header>
 
       <div
-        className="mt-3.5 overflow-hidden border-b border-border/60 bg-surface/50"
+        className="overflow-hidden border-b border-border/60 bg-surface/50"
         style={{
           maskImage: "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
           WebkitMaskImage:
