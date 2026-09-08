@@ -307,19 +307,19 @@ function Index() {
           </div>
         </div>
 
-        <div className="mx-auto flex h-12 max-w-[1360px] items-center gap-3 border-t border-border/40 px-6 lg:px-10">
+        <div className="mx-auto flex h-auto max-w-[1360px] flex-wrap items-center gap-3 border-t border-border/40 px-6 py-3.5 sm:h-12 sm:flex-nowrap sm:py-0 lg:px-10">
           <span className="label-mono flex shrink-0 items-center gap-2 text-muted-foreground">
             <span className="size-1.5 animate-pulse rounded-full bg-wire" />
             Live {new Date(fetchedAt).toUTCString().slice(17, 22)} UTC
           </span>
-          <span className="h-4 w-px shrink-0 bg-border" />
-          <div className="flex items-center gap-1 rounded-full bg-surface p-1">
+          <span className="hidden h-4 w-px shrink-0 bg-border sm:inline-block" />
+          <div className="flex w-full items-center gap-1 rounded-full bg-surface p-1 sm:w-auto">
             {SORTS.map((s) => (
               <button
                 key={s.id}
                 onClick={() => setSort(s.id)}
                 aria-pressed={sort === s.id}
-                className={`label-mono rounded-full px-3 py-1.5 transition-colors ${
+                className={`label-mono flex-1 rounded-full px-3 py-1.5 text-center text-xs transition-colors sm:flex-none sm:text-[0.8125rem] ${
                   sort === s.id
                     ? "bg-wire text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground"
@@ -342,7 +342,7 @@ function Index() {
             </button>
           )}
           <NewsletterSignup />
-          <span className="label-mono shrink-0 text-muted-foreground">
+          <span className="label-mono hidden shrink-0 text-muted-foreground sm:inline">
             {filtered.length} stories
           </span>
           {hasFilters && (
@@ -647,7 +647,7 @@ function NewsletterSignup() {
   }
 
   return (
-    <div ref={rootRef} className="relative ml-auto shrink-0">
+    <div ref={rootRef} className="relative ml-0 shrink-0 sm:ml-auto">
       <button
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
