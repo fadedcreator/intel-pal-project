@@ -540,8 +540,11 @@ function Index() {
             <Radio className="size-4 text-wire" />
             AIWire
           </span>
-          <div className="flex w-full flex-col items-center justify-between gap-4 sm:flex-row">
-            <nav className="flex items-center gap-5">
+          <div className="grid w-full grid-cols-1 items-center justify-items-center gap-4 sm:grid-cols-3 sm:justify-items-stretch">
+            <span className="label-mono justify-self-center text-muted-foreground sm:justify-self-start">
+              Headlines belong to their publishers
+            </span>
+            <nav className="flex items-center justify-center gap-5">
               <Link to="/sources" className="label-mono text-muted-foreground hover:text-foreground">
                 Sources
               </Link>
@@ -552,10 +555,7 @@ function Index() {
                 Privacy
               </Link>
             </nav>
-            <span className="label-mono text-muted-foreground">
-              Headlines belong to their publishers
-            </span>
-            <span className="label-mono text-muted-foreground">
+            <span className="label-mono justify-self-center text-muted-foreground sm:justify-self-end sm:text-right">
               Questions?{" "}
               <a
                 href="https://x.com/fadedcreator"
