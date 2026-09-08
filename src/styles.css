@@ -21,7 +21,8 @@
 @theme inline {
   --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Barlow Condensed", ui-sans-serif, sans-serif;
+  --font-mono: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-ticker: "Barlow Condensed", ui-sans-serif, sans-serif;
   --color-surface: var(--surface);
   --color-wire: var(--wire);
   --radius-sm: calc(var(--radius) - 4px);
@@ -162,6 +163,13 @@
 
 @utility label-mono {
   font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@utility ticker-mono {
+  font-family: var(--font-ticker);
   font-size: 0.68rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
