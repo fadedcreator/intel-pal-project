@@ -357,7 +357,7 @@ function Index() {
       </header>
 
       <div
-        className="overflow-hidden border-b border-border/60 bg-surface/50"
+        className="mt-3.5 overflow-hidden border-b border-border/60 bg-surface/50"
         style={{
           maskImage: "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
           WebkitMaskImage:
