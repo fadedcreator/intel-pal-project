@@ -380,7 +380,7 @@ function Index() {
                   href={a.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="label-mono flex items-center gap-2.5 whitespace-nowrap text-muted-foreground transition-colors hover:text-foreground"
+                  className="flex items-center gap-2.5 whitespace-nowrap font-sans text-xs tracking-normal text-muted-foreground normal-case transition-colors hover:text-foreground"
                 >
                   <span
                     className="size-1.5 rounded-full"
